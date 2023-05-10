@@ -57,4 +57,57 @@ Park.prototype.getTotalRevenueForYear = function() {
     return totalRevenueForYear
 }
 
+Park.prototype.removeDinosaursBySpecies = function(species) {
+    const dinosaursOfThisSpecies = this.getDinosaursBySpecies(species)
+    for (let dinosaur of this.dinosaurs) {
+        if (dinosaursOfThisSpecies.includes(dinosaur)){
+            this.removeDinosaur(dinosaur)
+        }
+    }
+}
+
+Park.prototype.getAllDietsOfDinosaurs = function() {
+    const listOfDiets = []
+    for (let dinosaur of this.dinosaurs) {
+        let dinoDiet = dinosaur.diet
+        let dietAlreadyInList = listOfDiets.includes(dinoDiet)
+        if (!dietAlreadyInList) {
+            listOfDiets.push(dinoDiet)
+        }
+    }
+    return listOfDiets
+}
+
+Park.prototype.getDinosaursByDiet = function(diet){
+    const dinosaursOfThisDiet = []
+    for (let dinosaur of this.dinosaurs){
+        if (dinosaur.diet === diet){
+            dinosaursOfThisDiet.push(dinosaur)
+        }
+    }
+    return dinosaursOfThisDiet
+}
+
+Park.prototype.getDietsAndDinosaurs = function() {
+    //this function needs to:
+    //create an empty object DONE
+    //get list of diets DONE
+    //insert every diet as a key DONE??
+    //get dinosaurs by diet for each diet DONE
+    //insert every length as the value DONE
+    //return this object DONE
+    const dietsAndDinosaursObject = {}
+    const listOfDiets = this.getAllDietsOfDinosaurs()
+    listOfDiets.forEach((key) => {
+        dietsAndDinosaursObject[key] = null
+    })
+    for (let diet of listOfDiets) {
+        const dinosByDiet = this.getDinosaursByDiet(diet)
+        const numberInList = dinosByDiet.length
+        dietsAndDinosaursObject[diet] = numberInList
+    }
+    return dietsAndDinosaursObject
+}
+
+
 module.exports = Park;
